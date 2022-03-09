@@ -5,18 +5,20 @@ import os
 import threading
 
 thread_lock = threading.BoundedSemaphore(value=3)
-background_img_path = "./qrcode_bg_sn.png"
+background_img_path = "./skm.jpg"
 
 def addtext(img, text):
     draw = ImageDraw.Draw(img)
     ttfront = ImageFont.truetype('simhei.ttf', 125)#字体大小
-    draw.text((1860, 4275),text,fill=(0,25,25), font=ttfront)#文字位置，内容，字体
+    draw.text((1860, 4775),text,fill=(0,25,25), font=ttfront)#文字位置，内容，字体
 
 def addqrcode(img, text):
     qrcode_img = qrcode.make(text, border = 0)
-    qrcode_img = qrcode_img.resize((1550,1450))
+    qrcode_img = qrcode_img.resize((1650,1650))
+    qrcode_x = 1420
+    qrcode_y = 3080
 
-    origin = (1485,2780,1485+qrcode_img.size[0],2780+qrcode_img.size[1])
+    origin = (qrcode_x,qrcode_y,qrcode_x+qrcode_img.size[0],qrcode_y+qrcode_img.size[1])
     img.paste(qrcode_img, origin)
 
 def createImg(path, sn):
@@ -25,7 +27,8 @@ def createImg(path, sn):
     addtext(base_img, 'NO.'+sn)
     addqrcode(base_img, qrcode_url)
     base_img.save(path+ sn+'.png')
-    base_img.close()
+    base_img.show()
+    # base_img.close()
     thread_lock.release()
 
 def main():
@@ -43,6 +46,8 @@ def main():
                 os.mkdir(path)
 
         for i in range(0,length):
+            if i== 1:
+                break
             print('第{}条记录'.format(i))
             path = './output/'+str(int(i/1000))+'/'
             thread_lock.acquire()  # 线程锁
