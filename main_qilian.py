@@ -24,7 +24,7 @@ def createImg(path, sn):
     base_img = Image.open(background_img_path)
     addtext(base_img, 'NO.'+sn)
     addqrcode(base_img, qrcode_url)
-    base_img.save(path+ sn+'.png')
+    base_img.save(path+ sn+'.jpg')
     base_img.close()
     thread_lock.release()
 
