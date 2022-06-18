@@ -44,8 +44,6 @@ def main():
             thread_lock.acquire()  # 线程锁
             T = threading.Thread(target = createImg, args=(path, str(records[i]['bh']), ))
             T.start()
-            if i ==  0:
-                break
 
 if __name__ == '__main__':
     main()
