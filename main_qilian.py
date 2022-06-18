@@ -37,14 +37,10 @@ def main():
 
         if os.path.exists('output') is not True:
             os.mkdir('output')
-        for i in range(0,int(length/1000)):
-            path = './output/'+str(i)+'/'
-            if os.path.exists(path) is not True:
-                os.mkdir(path)
 
         for i in range(0,length):
             print('第{}条记录'.format(i))
-            path = './output/'+str(int(i/1000))+'/'
+            path = './output/'
             thread_lock.acquire()  # 线程锁
             T = threading.Thread(target = createImg, args=(path, str(records[i]['bh']), ))
             T.start()
